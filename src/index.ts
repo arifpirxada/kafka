@@ -9,9 +9,7 @@ const rl = readline.createInterface({
 const logInstructions = () => {
   console.log("COMMANDS: \n");
   console.log("produce: to start producing messages");
-  console.log(
-    "consume <type>: start consuming messages (type - public or private)"
-  );
+  console.log("consume <group>: start consuming messages");
   console.log("clear: to clear console");
   console.log("exit: to quit the application \n");
 };
