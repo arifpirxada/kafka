@@ -1,4 +1,4 @@
-from python:3.14
+FROM python:3.12
 
 WORKDIR /app
 
@@ -6,6 +6,6 @@ COPY ./requirements.txt .
 
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
-COPY ./src .
+# COPY ./src .
 
-CMD ["fastapi", "run", "src/main.py", "--port", "8080"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8080", "--reload"]

@@ -1,4 +1,5 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
+from sqlalchemy import text
 import os
 
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -16,3 +17,8 @@ AsyncSessionLocal = async_sessionmaker(
 async def get_db():
     async with AsyncSessionLocal() as session:
         yield session
+
+async def check_connection():
+    async with engine.connect() as conn:
+        await conn.execute(text("SELECT 1"))
+    print("✅ Database connected successfully")
