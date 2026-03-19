@@ -8,4 +8,9 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 # COPY ./src .
 
+COPY ./alembic ./alembic
+COPY ./alembic.ini ./alembic.ini
+
+ENV PYTHONPATH=/app
+
 CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8080", "--reload"]
