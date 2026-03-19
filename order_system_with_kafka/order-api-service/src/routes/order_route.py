@@ -36,7 +36,6 @@ async def create_order(order_input: OrderCreatedInput, db: AsyncSession = Depend
         }
     except Exception as e:
         await db.rollback()
-        print(e)
         return {
             "message": "Order creation unsuccessful",
             "status": "failed"
