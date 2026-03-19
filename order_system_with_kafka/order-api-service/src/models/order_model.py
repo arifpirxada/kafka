@@ -1,7 +1,7 @@
 import enum
 from sqlalchemy import Enum
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import DateTime
 
 class Base(DeclarativeBase):
@@ -40,6 +40,6 @@ class Order(Base):
     payment_status: Mapped[PaymentStatus] = mapped_column(Enum(PaymentStatus), default=PaymentStatus.PENDING)
     delivery_status: Mapped[DeliveryStatus] = mapped_column(Enum(DeliveryStatus), default=DeliveryStatus.PENDING)
 
-    created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
     last_event_id: Mapped[str] = mapped_column(nullable=True)
