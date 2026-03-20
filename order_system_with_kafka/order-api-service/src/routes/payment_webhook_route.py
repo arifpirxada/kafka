@@ -24,15 +24,21 @@ async def payment_webhook(input: PaymentInput):
 
         event = {
             "type": event_type.value,
-            "order_id": input.orderId
+            "order_id": input.order_id
         }
 
-        asyncio.create_task(kafka_producer.send_message("order-events", input.orderId, event))
+        asyncio.create_task(kafka_producer.send_message("order-events", input.order_id, event))
 
-        return {
-            "message": "payment process successfull",
-            "status": "success"
-        }
+        if event_type.value == "PAYMENT_FAILED":
+            return {
+                "message": "payment failed",
+                "status": "failed"
+            }
+        else:
+            return {
+                "message": "payment process successfull",
+                "status": "success"
+            }
     except Exception as e:
         return {
             "message": "Error: failed to process payment",

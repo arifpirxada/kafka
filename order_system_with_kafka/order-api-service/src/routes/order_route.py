@@ -37,7 +37,7 @@ async def create_order(order_input: OrderCreatedInput, db: AsyncSession = Depend
         # Send Event to Kafka
 
         event = {
-            "type": OrderEvents.ORDER_CREATED,
+            "type": OrderEvents.ORDER_CREATED.value,
             "order_id": order_id 
         }
 

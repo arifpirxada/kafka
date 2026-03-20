@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 from .kafka.producer import kafka_producer
 
 from .routes import order_route
+from .routes import payment_webhook_route
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -25,6 +26,7 @@ app.add_middleware(
 )
 
 app.include_router(order_route.router)
+app.include_router(payment_webhook_route.router)
 
 @app.get("/")
 def read_root():

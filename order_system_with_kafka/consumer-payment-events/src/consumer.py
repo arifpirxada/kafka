@@ -66,8 +66,7 @@ class KafkaConsumer:
                     # logger.info("Waiting...")
                     continue
                 elif msg.error():
-                    logger.error(f"Error: {msg.error()}")
-                    raise
+                    raise Exception(f"Kafka error: {msg.error()}")
                 else:
                     await self.process_message(msg)
 

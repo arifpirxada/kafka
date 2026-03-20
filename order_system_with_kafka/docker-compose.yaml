@@ -66,6 +66,8 @@ services:
         condition: service_healthy
       kafka-3:
         condition: service_healthy
+      kafka-init:
+        condition: service_completed_successfully
     networks:
       - order-net
 

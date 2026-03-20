@@ -1,10 +1,11 @@
 import enum
 from pydantic import BaseModel
+from typing import Optional
 
 class PaymentStatus(enum.Enum):
     SUCCESS = "SUCCESS"
     FAILED = "FAILED"
 
 class PaymentInput(BaseModel):
-    orderId: str
-    status: PaymentStatus
+    order_id: str
+    status: Optional[PaymentStatus] = None
