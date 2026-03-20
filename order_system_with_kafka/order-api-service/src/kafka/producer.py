@@ -29,15 +29,20 @@ class KafkaProducer:
         if err:
             print('ERROR: Message failed delivery: {}'.format(err))
         else:
-            print("Produced event to topic {topic}: key = {key:12} value = {value:12}".format(
-                topic=msg.topic(), key=msg.key().decode('utf-8'), value=msg.value().decode('utf-8')))
+            key = msg.key().decode("utf-8") if msg.key() else None
+            value = msg.value().decode("utf-8") if msg.value() else None
+            print(
+                f"Produced event to topic {msg.topic()} "
+                f"partition={msg.partition()} offset={msg.offset()} "
+                f"key={key} value={value}"
+            )
             
 
-    async def send_message(self, topic: str, value: dict):
+    async def send_message(self, topic: str, key: str, value: dict):
         try:
             payload = json.dumps(value).encode("utf-8")
 
-            self.producer.produce(topic, value=payload, callback=self.delivery_callback)
+            self.producer.produce(topic, key=key.encode("utf-8"), value=payload, callback=self.delivery_callback)
 
             await asyncio.to_thread(self.producer.poll, 0)
 

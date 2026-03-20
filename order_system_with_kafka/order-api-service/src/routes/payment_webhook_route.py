@@ -27,7 +27,7 @@ async def payment_webhook(input: PaymentInput):
             "order_id": input.orderId
         }
 
-        asyncio.create_task(kafka_producer.send_message("orders", event))
+        asyncio.create_task(kafka_producer.send_message("order-events", input.orderId, event))
 
         return {
             "message": "payment process successfull",

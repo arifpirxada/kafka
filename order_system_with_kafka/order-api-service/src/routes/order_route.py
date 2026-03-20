@@ -41,7 +41,7 @@ async def create_order(order_input: OrderCreatedInput, db: AsyncSession = Depend
             "order_id": order_id 
         }
 
-        asyncio.create_task(kafka_producer.send_message("orders", event))
+        asyncio.create_task(kafka_producer.send_message("order-events", order_id, event))
 
         return {
             "message": "Order Created",

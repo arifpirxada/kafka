@@ -127,6 +127,19 @@ services:
       retries: 10
       start_period: 40s
 
+  kafka-init:
+    image: apache/kafka:latest
+    container_name: kafka-init
+    depends_on:
+      - kafka
+      - kafka-2
+      - kafka-3
+    networks:
+      - order-net
+    volumes:
+      - ./scripts/create-topics.sh:/create-topics.sh
+    entrypoint: ["/bin/sh", "/create-topics.sh"]
+
 volumes:
   postgres_data:
     driver: local
