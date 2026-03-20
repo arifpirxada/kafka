@@ -2,14 +2,17 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .db.db import check_connection
 from contextlib import asynccontextmanager
+from .kafka.producer import kafka_producer
 
 from .routes import order_route
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # startup
-    await check_connection()
+    await check_connection() # check Database connection
     yield
+    # Shutdown: Wait for remaining messages to be sent
+    kafka_producer.flush()
 
 app = FastAPI(lifespan=lifespan)
 
