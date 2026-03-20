@@ -6,6 +6,9 @@ from confluent_kafka import Consumer
 from .db.db import async_session
 from .models.order_model import Order
 from sqlalchemy import update
+from dotenv import load_dotenv
+
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 
@@ -53,12 +56,15 @@ class KafkaConsumer:
     async def run(self):
         self.consumer.subscribe(self.topics)
 
+        logger.info(f"Consumer Subscribed: {', '.join(self.topics)}")
+
         try:
             while self.running:
                 msg = await asyncio.to_thread(self.consumer.poll, 1.0)
 
                 if msg is None:
-                    logger.info("Waiting...")
+                    # logger.info("Waiting...")
+                    continue
                 elif msg.error():
                     logger.error(f"Error: {msg.error()}")
                     raise
