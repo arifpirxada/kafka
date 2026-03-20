@@ -17,7 +17,7 @@ if KAFKA_URL_2 is not None:
 class KafkaProducer:
     def __init__(self):
         self.conf = {
-            "bootstrap.servers": kafka_urls,
+            "bootstrap.servers": ",".join(kafka_urls),
             "client.id": "order-api-service",
 
             "linger.ms": 5,
