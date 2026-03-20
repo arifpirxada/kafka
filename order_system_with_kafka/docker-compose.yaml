@@ -137,7 +137,7 @@ services:
     networks:
       - order-net
     volumes:
-      - ./scripts/create-topics.sh:/create-topics.sh
+      - ./init-scripts/create-topics.sh:/create-topics.sh
     entrypoint: ["/bin/sh", "/create-topics.sh"]
 
 volumes:
